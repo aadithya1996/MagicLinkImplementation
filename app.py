@@ -7,7 +7,7 @@ import uuid
 import datetime
 from dotenv import load_dotenv
 load_dotenv()
-import resend   
+
 # import resend  # In production, use real Resend client
 
 # --- CONFIGURATION ---
@@ -89,7 +89,14 @@ def login_page():
                 st.error(f"Error: {result['error']}")
             elif result and "token" in result:
                 token = result["token"]
-                link = f"http://localhost:8501/?token={token}"
+                # Get App URL from env/secrets or default to localhost
+                app_url = os.environ.get("APP_URL")
+                if not app_url and "APP_URL" in st.secrets:
+                    app_url = st.secrets["APP_URL"]
+                if not app_url:
+                    app_url = "http://localhost:8501"
+
+                link = f"{app_url}/?token={token}"
                 
                 # Send Magic Link via Email
                 with st.spinner("Sending magic link..."):

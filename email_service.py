@@ -5,8 +5,15 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+import streamlit as st
+
 SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
+if not SENDGRID_API_KEY and "SENDGRID_API_KEY" in st.secrets:
+    SENDGRID_API_KEY = st.secrets["SENDGRID_API_KEY"]
+
 SENDGRID_FROM_EMAIL = os.environ.get("SENDGRID_FROM_EMAIL")
+if not SENDGRID_FROM_EMAIL and "SENDGRID_FROM_EMAIL" in st.secrets:
+    SENDGRID_FROM_EMAIL = st.secrets["SENDGRID_FROM_EMAIL"]
 
 def send_magic_link(email: str, link: str):
     """
