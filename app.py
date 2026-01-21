@@ -3,6 +3,7 @@ April Fool's Streamlit App with Magic Link Authentication
 """
 import streamlit as st
 import time
+import os
 import uuid
 import datetime
 from dotenv import load_dotenv
